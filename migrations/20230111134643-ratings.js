@@ -9,18 +9,31 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("ratings", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
-      username: {
-        type: Sequelize.STRING,
+      user: {
+        type: Sequelize.UUID,
       },
-      password: {
-        type: Sequelize.TEXT,
+      rating: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+
+      movie: {
+        type: Sequelize.UUID,
+      },
+
+      createdByUser: {
+        type: Sequelize.UUID,
+        references: {
+          model: "users",
+          key: "id",
+        },
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -32,15 +45,14 @@ module.exports = {
       },
     });
   },
-  
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("ratings");
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("users");
   },
 };

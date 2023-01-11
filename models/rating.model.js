@@ -1,26 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
-  const Movie = sequelize.define("movie", {
+  const Rating = sequelize.define("rating", {
     id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
+    user: {
+      type: Sequelize.UUID,
     },
-    genre: {
-      type: Sequelize.STRING,
-    },
-
-    language: {
-      type: Sequelize.STRING,
-    },
-    yearOfRelease: {
+    rating: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    movie: {
+      type: Sequelize.UUID,
+    },
+
     createdByUser: {
       type: Sequelize.UUID,
       references: {
@@ -38,12 +34,12 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
-  Movie.associate = function (models) {
-    Movie.belongsTo(models.user, {
-      foreignKey: "createdByUser",
-      as: "createdUserInfo",
-    });
-  };
+  // Movie.associate = function (models) {
+  //     Movie.belongsTo(models.user, {
+  //         foreignKey: "createdByUser",
+  //         as: "createdUserInfo",
+  //     });
+  // };
 
-  return Movie;
+  return Rating;
 };
